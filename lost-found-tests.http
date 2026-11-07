@@ -1,0 +1,50 @@
+### VS Code "REST Client" extension (humao.rest-client): click "Send Request" above each ###
+@baseUrl = http://localhost:3000
+
+### 1. Get all items
+GET {{baseUrl}}/items
+
+### 2. Add item (valid)
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{"name":"Black phone","category":"Electronics","location_found":"Library, 2nd floor","date_found":"2026-11-05","claimed":false}
+
+### 3. Get one item
+GET {{baseUrl}}/items/1
+
+### 4. Update item
+PUT {{baseUrl}}/items/1
+Content-Type: application/json
+
+{"name":"Black phone","category":"Electronics","location_found":"Library, 2nd floor","date_found":"2026-11-05","claimed":true}
+
+### 5. Delete item
+DELETE {{baseUrl}}/items/1
+
+### ERR 6. Item does not exist (expect 404)
+GET {{baseUrl}}/items/99999
+
+### ERR 7. Missing name (expect 400)
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{"category":"Keys","location_found":"Gate","date_found":"2026-11-05"}
+
+### ERR 8. Bad date (expect 400)
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{"name":"Keys","category":"Keys","location_found":"Gate","date_found":"yesterday"}
+
+### ERR 9. Update item that does not exist (expect 404)
+PUT {{baseUrl}}/items/99999
+Content-Type: application/json
+
+{"name":"Keys","category":"Keys","location_found":"Gate","date_found":"2026-11-05","claimed":false}
+
+### ERR 10. Delete item that does not exist (expect 404)
+DELETE {{baseUrl}}/items/99999
+
+### ERR 11. Invalid id (expect 400)
+GET {{baseUrl}}/items/abc
